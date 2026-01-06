@@ -1,0 +1,17 @@
+fastapi
+fastapi-mail
+uvicorn[standard]
+sqlalchemy
+psycopg2-binary
+pydantic
+python-dotenv       # Para ler o arquivo .env
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart
+aiofiles
+Pillow
+fastapi-limiter
+redis
+bcrypt==3.2.0       # A versão que funciona com passlib
+alembic             # Para migrações de banco
+better-profanity

@@ -1,0 +1,17 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.gitignore
+.git
+.vscode
+.idea
+docker-compose.yml
+Dockerfile
+GEMINI.md
+static_ui/
+uploads/
