@@ -20,7 +20,12 @@ tables.Base.metadata.create_all(bind=engine)
 app = FastAPI(title="IDNOFunny Pro API", version="2.0.0")
 
 # --- CORS ---
-origins = ["*"] # Em produção, especifique os domínios
+origins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://idnofunny-app.vercel.app",  # <--- Adicionar esta linha exata
+    "https://idnofunny-app.vercel.app/"  # <--- Adicionar com barra no final também por garantia
+]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
