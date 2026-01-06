@@ -38,7 +38,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 # Instala apenas as bibliotecas de sistema runtime necessárias (libpq para Postgres)
 RUN apt-get update && apt-get install -y \
-    libpq-5 \
+    libpq5 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copia o ambiente virtual do estágio builder
