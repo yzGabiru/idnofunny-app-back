@@ -5,6 +5,7 @@ from fastapi.responses import Response
 from fastapi_limiter import FastAPILimiter
 import redis.asyncio as redis
 import os
+import socket
 from dotenv import load_dotenv
 from sqlalchemy.orm import Session 
 from app.database import engine, SessionLocal 
@@ -73,6 +74,15 @@ async def startup():
 app.include_router(auth.router)
 app.include_router(memes.router)
 app.include_router(users.router)
+
+@app.get("/test-network")
+def test_network():
+    try:
+        # Tenta criar uma conexão TCP simples
+        socket.create_connection(("smtp.gmail.com", 587), timeout=5)
+        return {"status": "success", "message": "Conexão TCP com Gmail OK!"}
+    except Exception as e:
+        return {"status": "error", "detail": str(e)}
 
 @app.get("/")
 def root():
