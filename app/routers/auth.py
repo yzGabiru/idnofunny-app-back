@@ -23,15 +23,19 @@ logger = logging.getLogger("uvicorn.error")
 router = APIRouter(tags=["Authentication"])
 
 # --- CONFIGURAÇÃO DE EMAIL ---
-# Certifique-se que essas variáveis estão no seu .env ou no docker-compose
+# Lógica dinâmica para SSL (465) vs STARTTLS (587)
+mail_port = int(os.getenv("MAIL_PORT", 587))
+is_ssl = mail_port == 465
+
 conf = ConnectionConfig(
     MAIL_USERNAME = os.getenv("MAIL_USERNAME"),
     MAIL_PASSWORD = os.getenv("MAIL_PASSWORD"),
     MAIL_FROM = os.getenv("MAIL_FROM", "admin@idnofunny.com"),
-    MAIL_PORT = int(os.getenv("MAIL_PORT", 587)),
+    MAIL_PORT = mail_port,
     MAIL_SERVER = os.getenv("MAIL_SERVER", "smtp.gmail.com"),
-    MAIL_STARTTLS = True,
-    MAIL_SSL_TLS = False,
+    # Se porta 465 -> SSL=True, STARTTLS=False. Se 587 -> SSL=False, STARTTLS=True
+    MAIL_STARTTLS = os.getenv("MAIL_STARTTLS", str(not is_ssl)).lower() == 'true',
+    MAIL_SSL_TLS = os.getenv("MAIL_SSL_TLS", str(is_ssl)).lower() == 'true',
     USE_CREDENTIALS = True,
     VALIDATE_CERTS = True
 )
